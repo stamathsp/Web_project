@@ -22,4 +22,4 @@ Thumbs.db
 # Εφεδρικά αρχεία
 *~
 *.swp
-
+includes/secrets.php

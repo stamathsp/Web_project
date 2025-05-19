@@ -1,8 +1,6 @@
 <?php
-// Αντικατάστησε το παρακάτω με το δικό σου API Key
-define('YOUTUBE_API_KEY', 'AIzaSyAlhxwm-lHpm-Yi-v89YNBS3ZervQbsCjc');
+require_once(__DIR__ . '/secrets.php'); // περιέχει το YOUTUBE_API_KEY
 
-// Συνάρτηση για αναζήτηση βίντεο
 function searchYouTube($query, $maxResults = 10) {
     $apiKey = YOUTUBE_API_KEY;
     $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=$maxResults&q=" . urlencode($query) . "&key=$apiKey";
