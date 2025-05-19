@@ -1,16 +1,11 @@
 version: '3.8'
-
 services:
   web:
-    image: php:8.2-apache
-    container_name: php_web
+    build: .
     ports:
       - "8080:80"
     volumes:
       - ./app:/var/www/html
-      - ./public:/var/www/html/public
-    environment:
-      - APACHE_DOCUMENT_ROOT=/var/www/html
     depends_on:
       - db
 
