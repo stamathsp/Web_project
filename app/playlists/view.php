@@ -1,0 +1,57 @@
+<?php
+require_once('../includes/session.php');
+require_once('../includes/db.php');
+require_once('../includes/header.php');
+
+$playlist_id = $_GET['id'] ?? null;
+if (!$playlist_id) {
+    echo "<p>Η λίστα δεν βρέθηκε.</p>";
+    require_once('../includes/footer.php');
+    exit;
+}
+
+// Πληροφορίες λίστας
+$stmt = $pdo->prepare("SELECT playlists.*, users.username FROM playlists JOIN users ON playlists.user_id = users.id WHERE playlists.id = ?");
+$stmt->execute([$playlist_id]);
+$playlist = $stmt->fetch();
+
+if (!$playlist) {
+    echo "<p>Η λίστα δεν υπάρχει.</p>";
+    require_once('../includes/footer.php');
+    exit;
+}
+
+// Βίντεο της λίστας
+$stmt = $pdo->prepare("SELECT * FROM videos WHERE playlist_id = ?");
+$stmt->execute([$playlist_id]);
+$videos = $stmt->fetchAll();
+?>
+
+<h2>Λίστα: <?= htmlspecialchars($playlist['title']) ?></h2>
+<p>Δημιουργήθηκε από: <?= htmlspecialchars($playlist['username']) ?></p>
+<p>Ορατότητα: <?= $playlist['is_public'] ? 'Δημόσια' : 'Ιδιωτική' ?></p>
+
+<?php if ($_SESSION['user_id'] == $playlist['user_id']): ?>
+  <a href="edit.php?id=<?= $playlist_id ?>">✏️ Επεξεργασία</a>
+<?php endif; ?>
+
+<h3>Περιεχόμενο</h3>
+<?php if ($videos): ?>
+  <ul>
+    <?php foreach ($videos as $video): ?>
+      <li>
+        <p><strong><?= htmlspecialchars($video['title']) ?></strong></p>
+        <iframe width="320" height="180"
+                src="https://www.youtube.com/embed/<?= htmlspecialchars($video['youtube_id']) ?>"
+                frameborder="0" allowfullscreen>
+        </iframe>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+<?php else: ?>
+  <p>Η λίστα δεν περιέχει ακόμα βίντεο.</p>
+<?php endif; ?>
+
+<a href="../videos/search.php?playlist_id=<?= $playlist_id ?>">+ Προσθήκη Video</a>
+
+<?php require_once('../includes/footer.php'); ?>
