@@ -2,16 +2,15 @@
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/session.php';
 
-
 $user_id = $_SESSION['user_id'];
 
 // Φέρνουμε τα στοιχεία του χρήστη
-$stmt = $pdo->prepare("SELECT first_name, last_name, username, email FROM users WHERE id = ?");
+$stmt = $pdo->prepare("SELECT name, surname, username, email FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 
 // Φέρνουμε τις λίστες του
-$stmt2 = $pdo->prepare("SELECT id, title, is_public FROM playlists WHERE user_id = ?");
+$stmt2 = $pdo->prepare("SELECT id, name, is_public FROM playlists WHERE user_id = ?");
 $stmt2->execute([$user_id]);
 $playlists = $stmt2->fetchAll();
 ?>
@@ -26,13 +25,13 @@ $playlists = $stmt2->fetchAll();
 <body>
 <?php include '../includes/header.php'; ?>
 <main>
-    <h2>Καλώς ήρθες, <?= htmlspecialchars($user['first_name']) ?>!</h2>
+    <h2>Καλώς ήρθες, <?= htmlspecialchars($user['name']) ?>!</h2>
 
     <section>
         <h3>Στοιχεία Λογαριασμού</h3>
         <ul>
-            <li><strong>Όνομα:</strong> <?= htmlspecialchars($user['first_name']) ?></li>
-            <li><strong>Επώνυμο:</strong> <?= htmlspecialchars($user['last_name']) ?></li>
+            <li><strong>Όνομα:</strong> <?= htmlspecialchars($user['name']) ?></li>
+            <li><strong>Επώνυμο:</strong> <?= htmlspecialchars($user['surname']) ?></li>
             <li><strong>Username:</strong> <?= htmlspecialchars($user['username']) ?></li>
             <li><strong>Email:</strong> <?= htmlspecialchars($user['email']) ?></li>
         </ul>
@@ -47,7 +46,7 @@ $playlists = $stmt2->fetchAll();
                 <?php foreach ($playlists as $pl): ?>
                     <li>
                         <a href="../playlists/view.php?id=<?= $pl['id'] ?>">
-                            <?= htmlspecialchars($pl['title']) ?>
+                            <?= htmlspecialchars($pl['name']) ?>
                         </a>
                         <?= $pl['is_public'] ? '🌐 Δημόσια' : '🔒 Ιδιωτική' ?>
                     </li>

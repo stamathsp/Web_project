@@ -27,7 +27,7 @@ $stmt->execute([$playlist_id]);
 $videos = $stmt->fetchAll();
 ?>
 
-<h2>Λίστα: <?= htmlspecialchars($playlist['title']) ?></h2>
+<h2>Λίστα: <?= htmlspecialchars($playlist['name']) ?></h2>
 <p>Δημιουργήθηκε από: <?= htmlspecialchars($playlist['username']) ?></p>
 <p>Ορατότητα: <?= $playlist['is_public'] ? 'Δημόσια' : 'Ιδιωτική' ?></p>
 

@@ -23,3 +23,7 @@ Thumbs.db
 *~
 *.swp
 
+# Προστασία ευαίσθητων αρχείων
+.env
+includes/secrets.php
+

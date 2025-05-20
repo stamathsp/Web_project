@@ -1,13 +1,10 @@
 <?php
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/session.php';
-require_once __DIR__ . '/../includes/header.php';
-
 
 $playlist_id = $_GET['id'] ?? null;
 if (!$playlist_id) {
     echo "<p>Η λίστα δεν βρέθηκε.</p>";
-    require_once('../includes/footer.php');
     exit;
 }
 
@@ -18,26 +15,34 @@ $playlist = $stmt->fetch();
 
 if (!$playlist) {
     echo "<p>Δεν έχεις πρόσβαση σε αυτή τη λίστα.</p>";
-    require_once('../includes/footer.php');
     exit;
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = trim($_POST['title']);
+    $name = trim($_POST['name'] ?? '');
     $is_public = isset($_POST['is_public']) ? 1 : 0;
 
-    $stmt = $pdo->prepare("UPDATE playlists SET title = ?, is_public = ? WHERE id = ?");
-    $stmt->execute([$title, $is_public, $playlist_id]);
+    if ($name === '') {
+        die('Το όνομα δεν μπορεί να είναι κενό.');
+    }
+
+    $stmt = $pdo->prepare("UPDATE playlists SET name = ?, is_public = ? WHERE id = ?");
+    $stmt->execute([$name, $is_public, $playlist_id]);
 
     header("Location: view.php?id=$playlist_id");
     exit;
 }
+
+// 🟢 Αφού ΔΕΝ έγινε redirect, τώρα φορτώνουμε το UI:
+require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <h2>Επεξεργασία Λίστας</h2>
 
 <form method="post">
-  <label>Τίτλος:<br><input type="text" name="title" value="<?= htmlspecialchars($playlist['title']) ?>" required></label><br><br>
+  <label>Τίτλος:<br>
+    <input type="text" name="name" value="<?= htmlspecialchars($playlist['name'] ?? '') ?>" required>
+  </label><br><br>
 
   <label>
     <input type="checkbox" name="is_public" <?= $playlist['is_public'] ? 'checked' : '' ?>>
@@ -47,4 +52,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <button type="submit">Αποθήκευση</button>
 </form>
 
-<?php require_once('../includes/footer.php'); ?>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

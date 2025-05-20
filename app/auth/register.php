@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Αν δεν υπάρχουν σφάλματα, εισαγωγή στη βάση
     if (empty($errors)) {
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $stmt = $pdo->prepare("INSERT INTO users (first_name, last_name, username, email, password) VALUES (?, ?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO users (name, surname, username, email, password) VALUES (?, ?, ?, ?, ?)");
         $stmt->execute([$first_name, $last_name, $username, $email, $hashedPassword]);
         $success = true;
     }
