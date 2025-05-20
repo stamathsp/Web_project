@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/db.php'; // PDO σύνδεση
+require_once __DIR__ . '/../includes/db.php'; // PDO σύνδεση
 $errors = [];
 $success = false;
 

@@ -1,6 +1,7 @@
 <?php
-require_once('../includes/session.php');  // έλεγχος σύνδεσης
-require_once('../includes/db.php');
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/session.php';
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $playlist_id = $_POST['playlist_id'] ?? null;

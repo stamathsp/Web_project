@@ -1,6 +1,6 @@
 <?php
-require_once('../includes/header.php');
-require_once('../includes/oauth.php'); // έχει το API Key και τη συνάρτηση searchYouTube()
+require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../includes/oauth.php'; // έχει το API Key και τη συνάρτηση searchYouTube()
 
 $results = [];
 $playlist_id = $_GET['playlist_id'] ?? null;

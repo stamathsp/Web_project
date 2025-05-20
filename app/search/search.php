@@ -1,6 +1,7 @@
 <?php
-require_once '../includes/session.php';
-require_once '../includes/db.php';
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/session.php';
+
 
 $filters = [];
 $params = [];

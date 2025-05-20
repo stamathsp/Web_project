@@ -1,5 +1,5 @@
 <?php
-require_once('../includes/header.php');
+require_once __DIR__ . '/../includes/header.php';
 
 $youtube_id = $_GET['id'] ?? null;
 

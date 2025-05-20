@@ -1,7 +1,8 @@
 <?php
-require_once('../includes/session.php');
-require_once('../includes/db.php');
-require_once('../includes/header.php');
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/session.php';
+require_once __DIR__ . '/../includes/header.php';
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = trim($_POST['title'] ?? '');

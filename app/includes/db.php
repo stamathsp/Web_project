@@ -1,8 +1,8 @@
 <?php
 $host = 'db';
-$db   = 'web_project';
+$db   = 'streaming_site';
 $user = 'user';
-$pass = 'password';
+$pass = 'userpass'; 
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

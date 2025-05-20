@@ -1,4 +1,4 @@
-<?php include 'includes/header.php'; ?>
+<?php require_once __DIR__ . '/includes/header.php'; ?>
 <main>
     <h1>Σχετικά με την Πλατφόρμα</h1>
 
