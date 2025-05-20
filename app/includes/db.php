@@ -1,5 +1,5 @@
 <?php
-$host = 'db'; //database host
+$host = 'db';
 $db   = 'web_project';
 $user = 'user';
 $pass = 'password';
