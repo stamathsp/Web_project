@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute([$user_id]);
 
     // Διαγραφή follows (αν υπάρχει πίνακας follows)
-    $stmt = $pdo->prepare("DELETE FROM follows WHERE follower_id = ? OR followed_id = ?");
+    $stmt = $pdo->prepare("DELETE FROM follows WHERE follower_id = ? OR followee_id = ?");
     $stmt->execute([$user_id, $user_id]);
 
     // Διαγραφή χρήστη
