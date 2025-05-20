@@ -5,8 +5,8 @@
 <head>
   <meta charset="UTF-8">
   <title>StreamZone</title>
-  <link rel="stylesheet" href="/css/styles.css">
-  <script src="/js/theme.js" defer></script>
+  <link rel="stylesheet" href="/public/css/styles.css">
+  <script src="/public/js/theme.js" defer></script>
 </head>
 <body>
 <header>

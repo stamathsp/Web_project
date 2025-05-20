@@ -1,12 +1,12 @@
 version: '3.8'
+
 services:
   web:
     build: .
     ports:
       - "8080:80"
     volumes:
-      - ./:/var/www/html
-
+      - ./app:/var/www/html
     depends_on:
       - db
 
