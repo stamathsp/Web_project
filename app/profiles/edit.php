@@ -2,39 +2,37 @@
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/session.php';
 
-
 $user_id = $_SESSION['user_id'];
 $errors = [];
 $success = false;
 
 // Φέρνουμε τα στοιχεία για προγεμισμένα πεδία
-$stmt = $pdo->prepare("SELECT first_name, last_name, email, password FROM users WHERE id = ?");
+$stmt = $pdo->prepare("SELECT name, surname, email, password FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $first_name = trim($_POST['first_name']);
-    $last_name = trim($_POST['last_name']);
+    $name = trim($_POST['name']);
+    $surname = trim($_POST['surname']);
     $email = trim($_POST['email']);
     $current_password = $_POST['current_password'];
     $new_password = $_POST['new_password'];
 
-    if (empty($first_name) || empty($last_name) || empty($email) || empty($current_password)) {
+    if (empty($name) || empty($surname) || empty($email) || empty($current_password)) {
         $errors[] = "Τα πεδία με * είναι υποχρεωτικά.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "Μη έγκυρο email.";
     } elseif (!password_verify($current_password, $user['password'])) {
         $errors[] = "Ο τρέχων κωδικός είναι λανθασμένος.";
     } else {
-        // Αν όλα οκ, ενημερώνουμε
-        $params = [$first_name, $last_name, $email];
+        $params = [$name, $surname, $email];
 
         if (!empty($new_password)) {
             $hashed = password_hash($new_password, PASSWORD_DEFAULT);
-            $sql = "UPDATE users SET first_name = ?, last_name = ?, email = ?, password = ? WHERE id = ?";
+            $sql = "UPDATE users SET name = ?, surname = ?, email = ?, password = ? WHERE id = ?";
             $params[] = $hashed;
         } else {
-            $sql = "UPDATE users SET first_name = ?, last_name = ?, email = ? WHERE id = ?";
+            $sql = "UPDATE users SET name = ?, surname = ?, email = ? WHERE id = ?";
         }
 
         $params[] = $user_id;
@@ -66,8 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <form method="POST">
-        <label>Όνομα*: <input type="text" name="first_name" value="<?= htmlspecialchars($user['first_name']) ?>" required></label><br>
-        <label>Επώνυμο*: <input type="text" name="last_name" value="<?= htmlspecialchars($user['last_name']) ?>" required></label><br>
+        <label>Όνομα*: <input type="text" name="name" value="<?= htmlspecialchars($user['name']) ?>" required></label><br>
+        <label>Επώνυμο*: <input type="text" name="surname" value="<?= htmlspecialchars($user['surname']) ?>" required></label><br>
         <label>Email*: <input type="email" name="email" value="<?= htmlspecialchars($user['email']) ?>" required></label><br>
         <label>Τρέχων Κωδικός*: <input type="password" name="current_password" required></label><br>
         <label>Νέος Κωδικός (αν θέλεις): <input type="password" name="new_password"></label><br>
