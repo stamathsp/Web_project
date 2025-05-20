@@ -1,13 +1,12 @@
 <?php
-// Αφαίρεσε το session_start εδώ — το κάνεις ήδη στο session.php
 ?>
 <!DOCTYPE html>
 <html lang="el">
 <head>
   <meta charset="UTF-8">
   <title>StreamZone</title>
-  <link rel="stylesheet" href="/css/styles.css"> 
-  <script src="/js/theme.js" defer></script>     
+  <link rel="stylesheet" href="/public/css/styles.css"> // δεν εδειχνε το σωστό path
+  <script src="/public/js/theme.js" defer></script>     
 </head>
 <body>
 <header>
