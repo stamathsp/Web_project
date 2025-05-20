@@ -10,6 +10,9 @@ require_once __DIR__ . '/includes/header.php';
         <p>Είσαι συνδεδεμένος ως <strong><?= htmlspecialchars($_SESSION['username']) ?></strong>.</p>
         <p><a href="profiles/view.php">➡️ Πήγαινε στο προφίλ σου</a></p>
         <p><a href="playlists/view_all.php">🎵 Δες τις λίστες περιεχομένου</a></p>
+        <p><a href="playlists/create.php" class="btn btn-primary">➕ Δημιούργησε Νέα Λίστα</a></p>
+        <a href="videos/search.php" class="btn">🔍 Αναζήτηση στο YouTube</a>
+
     <?php else: ?>
         <p>Κάνε <a href="auth/login.php">Σύνδεση</a> ή <a href="auth/register.php">Εγγραφή</a> για να ξεκινήσεις.</p>
     <?php endif; ?>

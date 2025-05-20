@@ -11,7 +11,7 @@ $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 
 // Φέρνουμε τις λίστες του
-$stmt2 = $pdo->prepare("SELECT id, title, is_public FROM playlists WHERE user_id = ?");
+$stmt2 = $pdo->prepare("SELECT id, name, is_public FROM playlists WHERE user_id = ?");
 $stmt2->execute([$user_id]);
 $playlists = $stmt2->fetchAll();
 ?>
@@ -47,7 +47,7 @@ $playlists = $stmt2->fetchAll();
                 <?php foreach ($playlists as $pl): ?>
                     <li>
                         <a href="../playlists/view.php?id=<?= $pl['id'] ?>">
-                            <?= htmlspecialchars($pl['title']) ?>
+                            <?= htmlspecialchars($pl['name']) ?>
                         </a>
                         <?= $pl['is_public'] ? '🌐 Δημόσια' : '🔒 Ιδιωτική' ?>
                     </li>
