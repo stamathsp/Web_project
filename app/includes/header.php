@@ -7,9 +7,15 @@
   <title>StreamZone</title>
   <link rel="stylesheet" href="/public/css/styles.css">
   <script src="/public/js/theme.js" defer></script>
+  <script src="/public/js/accordion.js" defer></script
+
+
 </head>
+
 <body>
+  
 <header>
+  <button id="theme-toggle">🌓</button>
   <nav>
     <a href="/index.php">Αρχική</a>
     <a href="/about.php">Σκοπός</a>
@@ -22,6 +28,5 @@
       <a href="/auth/login.php">Σύνδεση</a>
     <?php endif; ?>
   </nav>
-  <button id="theme-toggle">🌓</button>
 </header>
 <main>

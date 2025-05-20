@@ -25,6 +25,27 @@ require_once __DIR__ . '/includes/header.php';
             <li>🧾 Εξαγωγή δεδομένων σε YAML</li>
         </ul>
     </section>
+
+    <section>
+        <h2>Συχνές Ερωτήσεις</h2>
+        <div class="accordion">
+  <button class="accordion-toggle">❓ Τι είναι το StreamLists;</button>
+  <div class="accordion-content">
+    <p>Η πλατφόρμα μας επιτρέπει να δημιουργείς και να μοιράζεσαι λίστες βίντεο από το YouTube.</p>
+  </div>
+
+  <button class="accordion-toggle">🔒 Είναι ασφαλές;</button>
+  <div class="accordion-content">
+    <p>Ναι, τα προσωπικά δεδομένα προστατεύονται και χρησιμοποιούμε ασφαλείς μεθόδους σύνδεσης.</p>
+  </div>
+
+  <button class="accordion-toggle">⚙️ Πώς να αλλάξω θέμα;</button>
+  <div class="accordion-content">
+    <p>Χρησιμοποίησε το κουμπί αλλαγής θέματος πάνω δεξιά.</p>
+  </div>
+</div>
+
+    </section>
 </main>
 
 <?php

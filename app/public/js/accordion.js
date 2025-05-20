@@ -1,20 +1,18 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const headers = document.querySelectorAll(".accordion-header");
+document.addEventListener("DOMContentLoaded", function () {
+  const toggles = document.querySelectorAll(".accordion-toggle");
 
-  if (headers.length === 0) {
-    console.warn("Δεν βρέθηκαν headers για το accordion.");
-    return;
-  }
+  toggles.forEach((toggle) => {
+    toggle.addEventListener("click", function () {
+      const content = toggle.nextElementSibling;
 
-  headers.forEach(header => {
-    header.addEventListener("click", () => {
-      const content = header.nextElementSibling;
-      content.classList.toggle("active");
-
-      // Προαιρετικά: Κλείσε τα υπόλοιπα
-      document.querySelectorAll(".accordion-content").forEach(other => {
-        if (other !== content) other.classList.remove("active");
+      // Κλείσιμο όλων
+      document.querySelectorAll(".accordion-content").forEach((el) => {
+        if (el !== content) el.style.display = "none";
       });
+
+      // Εναλλαγή προβολής του επιλεγμένου
+      content.style.display =
+        content.style.display === "block" ? "none" : "block";
     });
   });
 });

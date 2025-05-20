@@ -1,103 +1,37 @@
-body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 0;
-  background: white;
-  color: black;
-  transition: background 0.3s, color 0.3s;
-}
-
-body.dark-theme {
-  background: #121212;
-  color: #f0f0f0;
-}
-
-header, footer {
-  background: #eee;
-  padding: 1rem;
-  text-align: center;
-}
-
-body.dark-theme header,
-body.dark-theme footer {
-  background: #1e1e1e;
-  color: #fff;
-}
-
-.container {
-  padding: 2rem;
-}
-
-.accordion-header {
-  background: #ddd;
-  padding: 1rem;
-  margin: 0.5rem 0;
+.accordion-toggle {
+  background-color: #f1f1f1;
+  padding: 10px;
+  border: none;
   cursor: pointer;
+  width: 100%;
+  text-align: left;
   font-weight: bold;
-}
-
-body.dark-theme .accordion-header {
-  background: #333;
+  margin-bottom: 5px;
 }
 
 .accordion-content {
   display: none;
-  padding: 1rem;
+  padding: 10px;
   border: 1px solid #ccc;
+  background: #fff;
+  margin-bottom: 10px;
 }
 
-.accordion-content.active {
-  display: block;
-}
- 
-.help-button {
-  display: inline-block;
-  margin: 10px;
-  padding: 10px 16px;
-  background-color: #007bff;
-  color: white;
-  text-decoration: none;
-  border-radius: 10px;
-  transition: background-color 0.3s ease;
+body.dark-mode {
+  background-color: #121212;
+  color: #f1f1f1;
 }
 
-.help-button:hover {
-  background-color: #0056b3;
-}
-.back-button {
-  display: inline-block;
-  margin: 10px;
-  padding: 10px 16px;
-  background-color: #28a745;
-  color: white;
-  text-decoration: none;
-  border-radius: 10px;
-  transition: background-color 0.3s ease;
+body.dark-mode a {
+  color: #80d0ff;
 }
 
-.back-button {
-  display: inline-block;
-  padding: 10px 18px;
-  background-color: #4CAF50; /* Πράσινο */
-  color: white;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+body.dark-mode .accordion-toggle {
+  background-color: #333;
+  color: #f1f1f1;
 }
 
-.back-button:hover {
-  background-color: #45a049;
-}
-
-a {
-  color: #007BFF; /* μπλε χρώμα */
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-a:hover {
-  color: #0056b3;
+body.dark-mode .accordion-content {
+  background-color: #222;
+  border-color: #444;
 }
