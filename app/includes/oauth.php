@@ -1,17 +1,16 @@
 <?php
-require_once(__DIR__ . '/secrets.php'); // περιέχει το YOUTUBE_API_KEY
+require_once __DIR__ . '/secrets.php';
 
-function searchYouTube($query, $pageToken = null, $maxResults = 10) {
+function searchYouTube($query, $pageToken = null, $maxResults = 5) {
     $apiKey = YOUTUBE_API_KEY;
-    $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=$maxResults&q=" . urlencode($query) . "&key=$apiKey";
+    $url = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=$maxResults&q=" . urlencode($query) . "&type=video&key=$apiKey";
+
     if ($pageToken) {
         $url .= "&pageToken=" . urlencode($pageToken);
     }
 
-    $response = file_get_contents($url);
-    if ($response === false) {
-        return [];
-    }
+    $response = @file_get_contents($url);
+    if ($response === false) return [];
 
-    return json_decode($response, true); // Επιστρέφει ΟΛΟΚΛΗΡΟ το response
+    return json_decode($response, true);
 }
