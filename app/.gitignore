@@ -1,0 +1,29 @@
+# Composer
+/vendor/
+composer.lock
+
+# Logs, cache, temp
+*.log
+/tmp/
+.cache/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Docker build artifacts
+*.pid
+*.sock
+
+# PHPStorm / VSCode / IDE files
+.idea/
+.vscode/
+
+# Εφεδρικά αρχεία
+*~
+*.swp
+
+# Προστασία ευαίσθητων αρχείων
+.env
+includes/secrets.php
+

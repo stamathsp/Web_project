@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '/../vendor/autoload.php';
+
+require_once realpath(__DIR__ . '/../vendor/autoload.php');
 require_once __DIR__ . '/../includes/db.php';
 
 use Symfony\Component\Yaml\Yaml;
@@ -9,14 +10,20 @@ header('Content-Type: text/yaml');
 $data = [];
 
 $query = "
-SELECT p.id AS playlist_id, p.title AS playlist_title, p.is_public,
-       v.title AS video_title, v.url, v.created_at,
-       u.username, u.password
-FROM playlists p
-JOIN videos v ON v.playlist_id = p.id
-JOIN users u ON u.id = v.user_id
-WHERE p.is_public = 1
-ORDER BY p.id, v.created_at";
+    SELECT 
+        p.id AS playlist_id,
+        p.name AS playlist_title,
+        v.title AS video_title,
+        v.youtube_id,
+        v.added_at,
+        u.username,
+        u.password
+    FROM playlists p
+    JOIN videos v ON v.playlist_id = p.id
+    JOIN users u ON u.id = v.added_by
+    WHERE p.is_public = 1
+    ORDER BY p.id, v.added_at
+";
 
 $stmt = $pdo->prepare($query);
 $stmt->execute();
@@ -28,17 +35,18 @@ foreach ($results as $row) {
 
     if (!isset($data[$pid])) {
         $data[$pid] = [
-            'playlist_title' => $row['playlist_title'],
-            'user_hash' => $uid_hash,
-            'videos' => []
+            'playlist_id'   => $pid,
+            'playlist_name' => $row['playlist_title'],
+            'owner_hash'    => $uid_hash,
+            'videos'        => []
         ];
     }
 
     $data[$pid]['videos'][] = [
-        'title' => $row['video_title'],
-        'url' => $row['url'],
-        'created_at' => $row['created_at']
+        'title'       => $row['video_title'],
+        'youtube_id'  => $row['youtube_id'],
+        'added_at'    => $row['added_at']
     ];
 }
 
-echo Yaml::dump(array_values($data), 4, 2);
+echo Yaml::dump(array_values($data), 2, 4);

@@ -13,6 +13,7 @@ require_once __DIR__ . '/includes/header.php';
         <p><a href="playlists/create.php" class="btn btn-primary">➕ Δημιούργησε Νέα Λίστα</a></p>
         <p></p><a href="videos/search.php" class="btn">🔍 Αναζήτηση στο YouTube</a><p>
         <a href="profiles/discover.php">🔎 Βρες χρήστες</a>
+        <p><a href="export/open_data.php" class="btn">📤 Εξαγωγή Δεδομένων</a></p>
 
 
     <?php else: ?>
