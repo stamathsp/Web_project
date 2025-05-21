@@ -34,7 +34,6 @@ CREATE TABLE IF NOT EXISTS videos (
   FOREIGN KEY (added_by) REFERENCES users(id) ON DELETE CASCADE
 );
 
-
 CREATE TABLE IF NOT EXISTS follows (
   follower_id INT NOT NULL,
   followee_id INT NOT NULL,

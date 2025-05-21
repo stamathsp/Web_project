@@ -26,8 +26,12 @@ if (!$playlist) {
     exit;
 }
 
-// Βίντεο της λίστας (από playlist_videos)
-$stmt = $pdo->prepare("SELECT * FROM playlist_videos WHERE playlist_id = ?");
+// Βίντεο της λίστας (από τον πίνακα videos)
+$stmt = $pdo->prepare("
+    SELECT * FROM videos 
+    WHERE playlist_id = ?
+    ORDER BY added_at DESC
+");
 $stmt->execute([$playlist_id]);
 $videos = $stmt->fetchAll();
 ?>
@@ -47,7 +51,7 @@ $videos = $stmt->fetchAll();
             <li style="margin-bottom: 2rem;">
                 <p><strong><?= htmlspecialchars($video['title']) ?></strong></p>
                 <iframe width="320" height="180"
-                        src="https://www.youtube.com/embed/<?= htmlspecialchars($video['youtube_video_id']) ?>"
+                        src="https://www.youtube.com/embed/<?= htmlspecialchars($video['youtube_id']) ?>"
                         frameborder="0" allowfullscreen>
                 </iframe>
 
@@ -65,6 +69,8 @@ $videos = $stmt->fetchAll();
     <p>❗ Η λίστα δεν περιέχει ακόμα βίντεο.</p>
 <?php endif; ?>
 
-<a href="add_video.php?id=<?= $playlist_id ?>" class="btn">➕ Προσθήκη Video</a>
+<?php if ($_SESSION['user_id'] == $playlist['user_id']): ?>
+    <a href="add_video.php?id=<?= $playlist_id ?>" class="btn">➕ Προσθήκη Video</a>
+<?php endif; ?>
 
 <?php require_once('../includes/footer.php'); ?>

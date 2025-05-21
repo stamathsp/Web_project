@@ -25,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_video'])) {
     $video_id = $_POST['video_id'];
     $title = $_POST['title'];
 
-    $stmt = $pdo->prepare("INSERT INTO playlist_videos (playlist_id, user_id, youtube_video_id, title) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$playlist_id, $user_id, $video_id, $title]);
+    $stmt = $pdo->prepare("INSERT INTO videos (playlist_id, youtube_id, title, added_by) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$playlist_id, $video_id, $title, $user_id]);
 }
 
 // --- Χειρισμός αναζήτησης ---
@@ -58,7 +58,6 @@ if ($query !== '') {
 
 <h2>➕ Προσθήκη video στη λίστα: <?= htmlspecialchars($playlist['name']) ?></h2>
 
-<!-- Φόρμα αναζήτησης -->
 <form method="get">
     <input type="hidden" name="id" value="<?= $playlist_id ?>">
     <input type="text" name="q" placeholder="Αναζήτηση στο YouTube..." required value="<?= htmlspecialchars($query) ?>">
@@ -85,7 +84,6 @@ if ($query !== '') {
         <?php endforeach; ?>
     </ul>
 
-    <!-- Σελιδοποίηση -->
     <div class="pagination">
         <?php if ($prevPageToken): ?>
             <a href="?id=<?= $playlist_id ?>&q=<?= urlencode($query) ?>&pageToken=<?= $prevPageToken ?>&pageIndex=<?= $pageIndex - 1 ?>">⬅️ Προηγούμενη</a>
