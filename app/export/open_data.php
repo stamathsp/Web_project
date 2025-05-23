@@ -14,7 +14,7 @@ $query = "
         p.id AS playlist_id,
         p.name AS playlist_title,
         v.title AS video_title,
-        v.youtube_id,
+        v.youtube_id,   
         v.added_at,
         u.username,
         u.password

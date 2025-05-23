@@ -5,7 +5,6 @@ require_once __DIR__ . '/../includes/header.php';
 
 $user_id = $_SESSION['user_id'];
 
-<<<<<<< HEAD
 // Φόρμα Αναζήτησης - Τιμές από GET ή POST
 $search = $_GET['search'] ?? '';
 $from_date = $_GET['from_date'] ?? '';
@@ -78,18 +77,7 @@ $playlists = $stmt->fetchAll();
   <?php else: ?>
     <li>⚠️ Δεν βρέθηκαν λίστες.</li>
   <?php endif; ?>
-=======
-// Ενιαίο query: δικές σου ή δημόσιες όσων ακολουθείς
-$stmt = $pdo->prepare("
-  SELECT p.*, u.username 
-  FROM playlists p
-  JOIN users u ON u.id = p.user_id
-  LEFT JOIN follows f ON f.followee_id = p.user_id AND f.follower_id = ?
-  WHERE p.user_id = ? OR (f.follower_id IS NOT NULL AND p.is_public = 1)
-");
-$stmt->execute([$user_id, $user_id]);
-$playlists = $stmt->fetchAll();
-?>
+
 
 <h2>Λίστες</h2>
 <ul>
@@ -109,7 +97,6 @@ $playlists = $stmt->fetchAll();
       <?php endif; ?>
     </li>
   <?php endforeach; ?>
->>>>>>> 09c80d3601288b6e14830210fe44bbc5acc2111f
 </ul>
 
 <p><a href="create.php" class="btn">➕ Δημιουργία νέας λίστας</a></p>
