@@ -93,7 +93,7 @@ $playlists = $stmt->fetchAll();
   <?php else: ?>
     <li>⚠️ Δεν βρέθηκαν λίστες.</li>
   <?php endif; ?>
-<<<<<<< HEAD
+
 
 
 <h2>Λίστες</h2>
@@ -114,8 +114,7 @@ $playlists = $stmt->fetchAll();
       <?php endif; ?>
     </li>
   <?php endforeach; ?>
-=======
->>>>>>> 9b85123fd9f3496e0d8d7f7f86c8b9e973297e89
+
 </ul>
 
 <p><a href="create.php" class="btn">➕ Δημιουργία νέας λίστας</a></p>
