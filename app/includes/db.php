@@ -15,5 +15,5 @@ $options = [
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (PDOException $e) {
-    exit("Σφάλμα σύνδεσης: " . $e->getMessage());
+    exit("Database connection failed: " . $e->getMessage());
 }

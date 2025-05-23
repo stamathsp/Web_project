@@ -1,8 +1,6 @@
 <?php
-
 require_once realpath(__DIR__ . '/../vendor/autoload.php');
 require_once __DIR__ . '/../includes/db.php';
-
 use Symfony\Component\Yaml\Yaml;
 
 header('Content-Type: text/yaml');
@@ -10,7 +8,7 @@ header('Content-Type: text/yaml');
 $data = [];
 
 $query = "
-    SELECT 
+    SELECT
         p.id AS playlist_id,
         p.name AS playlist_title,
         v.title AS video_title,
