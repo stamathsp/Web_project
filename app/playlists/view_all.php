@@ -3,15 +3,22 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/session.php';
 require_once __DIR__ . '/../includes/header.php';
 
+// Έλεγχος αν ο χρήστης είναι αυθεντικοποιημένος
+if (!isset($_SESSION['user_id'])) {
+    $_SESSION['redirect_after_login'] = $_SERVER['REQUEST_URI'];
+    header('Location: /auth/login.php');
+    exit;
+}
+
 $user_id = $_SESSION['user_id'];
 
 // Φόρμα Αναζήτησης - Τιμές από GET ή POST
 $search = $_GET['search'] ?? '';
-$from_date = $_GET['from_date'] ?? '';
+$from_date = $_GET['from_date'] ?? '';    
 $to_date = $_GET['to_date'] ?? '';
 $user_filter = $_GET['user_filter'] ?? '';
 
-// Βασικό query με JOIN για να ψάξουμε σε τίτλο, περιεχόμενο, και στοιχεία χρήστη
+// Query με φίλτρα
 $query = "
 SELECT DISTINCT p.*, u.username, u.name AS firstname, u.surname AS lastname, u.email
 FROM playlists p
@@ -22,7 +29,6 @@ WHERE (p.user_id = :uid OR (p.is_public = 1 AND p.user_id IN (
 )))
 ";
 
-// Προσθήκη φίλτρων
 $params = ['uid' => $user_id];
 
 if ($search) {
@@ -72,11 +78,22 @@ $playlists = $stmt->fetchAll();
       <li>
         <a href="view.php?id=<?= $pl['id'] ?>"><?= htmlspecialchars($pl['name']) ?></a>
         (του χρήστη <?= htmlspecialchars($pl['username']) ?>)
+
+        <?php if ($pl['user_id'] == $_SESSION['user_id']): ?>
+          | <a href="edit.php?id=<?= $pl['id'] ?>">✏️</a>
+          | <a href="add_video.php?id=<?= $pl['id'] ?>">➕ Προσθήκη video</a>
+          | 
+          <form method="post" action="delete.php" style="display:inline;">
+            <input type="hidden" name="playlist_id" value="<?= $pl['id'] ?>">
+            <button type="submit" onclick="return confirm('Να διαγραφεί η λίστα;')">🗑️</button>
+          </form>
+        <?php endif; ?>
       </li>
     <?php endforeach; ?>
   <?php else: ?>
     <li>⚠️ Δεν βρέθηκαν λίστες.</li>
   <?php endif; ?>
+<<<<<<< HEAD
 
 
 <h2>Λίστες</h2>
@@ -97,6 +114,8 @@ $playlists = $stmt->fetchAll();
       <?php endif; ?>
     </li>
   <?php endforeach; ?>
+=======
+>>>>>>> 9b85123fd9f3496e0d8d7f7f86c8b9e973297e89
 </ul>
 
 <p><a href="create.php" class="btn">➕ Δημιουργία νέας λίστας</a></p>
