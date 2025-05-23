@@ -32,6 +32,14 @@ services:
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: rootpass
-
+      
+  composer:
+    image: composer:latest
+    platform: linux/amd64    
+    container_name: di_inter_tech_2025_composer
+    volumes:
+      - ./php:/app
+    working_dir: /app
+    command: ["composer", "install"]
 volumes:
   db_data:
