@@ -25,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_video'])) {
     $video_id = $_POST['video_id'];
     $title = $_POST['title'];
 
-    $stmt = $pdo->prepare("INSERT INTO videos (playlist_id, youtube_id, title, added_by) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$playlist_id, $video_id, $title, $user_id]);
+    $stmt = $pdo->prepare("INSERT INTO playlist_videos (playlist_id, user_id, youtube_video_id, title) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$playlist_id, $user_id, $video_id, $title]);
 }
 
 // --- Χειρισμός αναζήτησης ---
