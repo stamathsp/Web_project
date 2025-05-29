@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/session.php';
 require_once __DIR__ . '/../includes/secrets.php';
-require_once __DIR__ . '/../includes/header.php';
+
 
 $playlist_id = $_GET['id'] ?? null;
 $user_id = $_SESSION['user_id'];
@@ -25,9 +25,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_video'])) {
     $video_id = $_POST['video_id'];
     $title = $_POST['title'];
 
-    $stmt = $pdo->prepare("INSERT INTO playlist_videos (playlist_id, user_id, youtube_video_id, title) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$playlist_id, $user_id, $video_id, $title]);
+    // Προαιρετικός έλεγχος για διπλοεγγραφή
+    $stmt = $pdo->prepare("SELECT 1 FROM playlist_videos WHERE playlist_id = ? AND youtube_video_id = ?");
+    $stmt->execute([$playlist_id, $video_id]);
+    if (!$stmt->fetch()) {
+        $stmt = $pdo->prepare("INSERT INTO playlist_videos (playlist_id, user_id, youtube_video_id, title) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$playlist_id, $user_id, $video_id, $title]);
+    }
+
+    // Redirect για να αποτραπεί επανάληψη και να φορτώσει σωστά η σελίδα
+    $query = $_GET['q'] ?? '';
+    $pageToken = $_GET['pageToken'] ?? '';
+    $pageIndex = $_GET['pageIndex'] ?? 1;
+
+    header("Location: add_video.php?id=$playlist_id&q=" . urlencode($query) . "&pageToken=" . urlencode($pageToken) . "&pageIndex=$pageIndex");
+    exit;
 }
+
+require_once __DIR__ . '/../includes/header.php';
 
 // --- Χειρισμός αναζήτησης ---
 $query = $_GET['q'] ?? '';
@@ -75,7 +90,7 @@ if ($query !== '') {
             <strong><?= htmlspecialchars($title) ?></strong><br>
             <img src="<?= $item['snippet']['thumbnails']['default']['url'] ?>" alt="Thumbnail"><br>
             <form method="post" style="display:inline;">
-                <input type="hidden" name="video_id" value="<?= $vid ?>">
+                <input type="hidden" name="video_id" value="<?= htmlspecialchars($vid) ?>">
                 <input type="hidden" name="title" value="<?= htmlspecialchars($title) ?>">
                 <input type="hidden" name="add_video" value="1">
                 <button type="submit">➕ Προσθήκη στη λίστα</button>
@@ -86,11 +101,11 @@ if ($query !== '') {
 
     <div class="pagination">
         <?php if ($prevPageToken): ?>
-            <a href="?id=<?= $playlist_id ?>&q=<?= urlencode($query) ?>&pageToken=<?= $prevPageToken ?>&pageIndex=<?= $pageIndex - 1 ?>">⬅️ Προηγούμενη</a>
+            <a href="?id=<?= $playlist_id ?>&q=<?= urlencode($query) ?>&pageToken=<?= urlencode($prevPageToken) ?>&pageIndex=<?= $pageIndex - 1 ?>">⬅️ Προηγούμενη</a>
         <?php endif; ?>
 
         <?php if ($nextPageToken): ?>
-            <a href="?id=<?= $playlist_id ?>&q=<?= urlencode($query) ?>&pageToken=<?= $nextPageToken ?>&pageIndex=<?= $pageIndex + 1 ?>">➡️ Επόμενη</a>
+            <a href="?id=<?= $playlist_id ?>&q=<?= urlencode($query) ?>&pageToken=<?= urlencode($nextPageToken) ?>&pageIndex=<?= $pageIndex + 1 ?>">➡️ Επόμενη</a>
         <?php endif; ?>
     </div>
 <?php elseif ($query !== ''): ?>

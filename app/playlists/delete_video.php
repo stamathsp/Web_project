@@ -19,9 +19,10 @@ if (!$playlist) {
     die("🚫 Δεν έχεις δικαίωμα να τροποποιήσεις αυτή τη λίστα.");
 }
 
-// Διαγραφή του video από τη λίστα (από τον πίνακα videos)
-$stmt = $pdo->prepare("DELETE FROM videos WHERE id = ? AND playlist_id = ?");
+// Διαγραφή του βίντεο από τον πίνακα playlist_videos
+$stmt = $pdo->prepare("DELETE FROM playlist_videos WHERE id = ? AND playlist_id = ?");
 $stmt->execute([$video_id, $playlist_id]);
 
-header("Location: view.php?id=$playlist_id");
+// Επιστροφή στην προβολή της λίστας
+header("Location: view.php?id=" . $playlist_id);
 exit;

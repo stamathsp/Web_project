@@ -28,7 +28,7 @@ if (!$playlist) {
 
 // Βίντεο της λίστας (από τον πίνακα videos)
 $stmt = $pdo->prepare("
-    SELECT * FROM videos 
+    SELECT * FROM playlist_videos
     WHERE playlist_id = ?
     ORDER BY added_at DESC
 ");
@@ -51,7 +51,7 @@ $videos = $stmt->fetchAll();
             <li style="margin-bottom: 2rem;">
                 <p><strong><?= htmlspecialchars($video['title']) ?></strong></p>
                 <iframe width="320" height="180"
-                        src="https://www.youtube.com/embed/<?= htmlspecialchars($video['youtube_id']) ?>"
+                        src="https://www.youtube.com/embed/<?= htmlspecialchars($video['youtube_video_id']) ?>"
                         frameborder="0" allowfullscreen>
                 </iframe>
 
